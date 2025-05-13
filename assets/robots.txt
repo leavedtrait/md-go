@@ -1,0 +1,4 @@
+# robots.txt for blog-ykk5.onrender.com 
+
+User-agent: *
+Disallow:
