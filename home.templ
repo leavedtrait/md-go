@@ -1,0 +1,132 @@
+package main
+
+import (
+	"github.com/axzilla/templui/component/aspectratio"
+	"github.com/axzilla/templui/component/button"
+	"github.com/axzilla/templui/component/card"
+)
+
+templ NavBar() {
+	<nav class="bg-gray-50 px-2 py-4 ">
+		<div class="max-w-6xl mx-auto flex items-center justify-between flex-wrap">
+			<!-- Logo -->
+			<a href="/" class="text-xl font-semibold text-gray-900 ">
+				leavedtrait
+			</a>
+			<!-- Mobile menu button -->
+			<button
+				id="menu-toggle"
+				class="lg:hidden text-gray-700 focus:outline-none border rounded-sm p-1"
+				aria-label="Toggle menu"
+			>
+				<svg class="h-6 w-6 text-sm fill-current" viewBox="0 0 20 20">
+					<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+				</svg>
+			</button>
+			<!-- Menu -->
+			<div
+				id="menu"
+				class="w-full lg:flex lg:items-center lg:w-auto hidden lg:block mt-4 lg:mt-0 space-x-4"
+			>
+				<div class="text-sm lg:flex-grow space-y-2 lg:space-y-0 lg:space-x-4 text-gray-800">
+					<a href="/about" class="block  lg:inline-block hover:text-blue-600 transition">About</a>
+					<a href="/blog" class="block lg:inline-block hover:text-blue-600 transition">Blog</a>
+				</div>
+				
+				<div class="mt-4 lg:mt-0">
+					<a
+						href="/login"
+						class="inline-block border border-gray-800 px-4 py-2 rounded hover:bg-gray-100 transition text-sm"
+					>
+						Log in
+					</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("menu");
+
+  toggle.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+  });
+</script>
+}
+
+type BlogPost struct {
+	Title       string
+	Date        string
+	Tags        []string
+	ImageSrc    string
+	Description string
+}
+
+templ CardImageTop(post BlogPost) {
+	<div class="w-full max-w-sm">
+		@card.Card() {
+			@card.Media(card.MediaProps{
+				ID:          "top-media",
+				Alt:         "Card image",
+				Position:    card.MediaPositionTop,
+				AspectRatio: aspectratio.RatioVideo,
+				Src:         post.ImageSrc,
+			})
+			@card.Header() {
+				@card.Title() {
+					{ post.Title }
+				}
+				@card.Description() {
+					<p>
+						{ post.Date } ·
+						for _, tag := range post.Tags {
+							<span class="text-blue-400">#{ tag }</span>{ string(" ") }
+						}
+					</p>
+				}
+			}
+			@card.Content() {
+				<p class="line-clamp-2">{ post.Description }</p>
+			}
+			@card.Footer() {
+				<div class="flex justify-end w-full">
+					@button.Button(button.Props{Variant: button.VariantOutline}) {
+						Read more
+					}
+				</div>
+			}
+		}
+	</div>
+}
+
+templ page(posts []BlogPost) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Home | leavedtrait</title>
+			<link rel="stylesheet" href="/assets/css/output.css"/>
+			<script src="/assets/tailwind.js"></script>
+		</head>
+		<body class="bg-gray-50 text-gray-900 flex justify-center">
+			<div class="min-h-screen max-w-6xl p-4">
+				@NavBar()
+				<div class="space-y-2 text-md font-medium text-left leading-relaxed mx-auto p-2">
+					<p>Hey I’m Johnson also known as <span class="text-blue-400"><a href="/about">{ "@leavedtrait" }</a></span></p>
+					<p>I love building clean, fast, and user-focused apps.I work mostly with modern tools like Go, Rust, and JavaScript.</p>
+					<p>Lately, I’ve been exploring DevOps—tools like Docker and Pulumi.</p>
+					<p>I’m also diving into embedded development using Rust.</p>
+					<br/>
+					<p>You can <span class="text-blue-400"><a href="/about">read more about me</a></span>, if you wish.</p>
+					<br/>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center max-w-6xl mx-auto">
+					for _, post := range posts {
+						@CardImageTop(post)
+					}
+				</div>
+			</div>
+		</body>
+	</html>
+}

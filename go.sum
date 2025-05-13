@@ -1,0 +1,6 @@
+github.com/Oudwins/tailwind-merge-go v0.2.0 h1:rtVHgYmLwwae4P+K6//ceRuUdyz3Bny6fo4664fOEmo=
+github.com/Oudwins/tailwind-merge-go v0.2.0/go.mod h1:kkZodgOPvZQ8f7SIrlWkG/w1g9JTbtnptnePIh3V72U=
+github.com/a-h/templ v0.3.865 h1:nYn5EWm9EiXaDgWcMQaKiKvrydqgxDUtT1+4zU2C43A=
+github.com/a-h/templ v0.3.865/go.mod h1:oLBbZVQ6//Q6zpvSMPTuBK0F3qOtBdFBcGRspcT+VNQ=
+github.com/axzilla/templui v0.64.0 h1:FXi7DgXmS60utY8RynAhsW7P5zLm9qNAif73h0RjFX0=
+github.com/axzilla/templui v0.64.0/go.mod h1:141Qvlr27GWPPiBFFWqLFs9DlE+YthGtah6VjG32u08=
